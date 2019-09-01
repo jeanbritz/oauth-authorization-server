@@ -1,0 +1,15 @@
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-expand-xl|lg|md|sm">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">OAuth Server</a>
+            </div>
+                 <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="#"><span sec:authorize="isAuthenticated()">Logged user: <span
+                                sec:authentication="name"></span></span></a></li>
+                 </ul>
+        </div>
+    </nav>
+</header>

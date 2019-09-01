@@ -1,0 +1,74 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet id="create-users-table" author="britzj">
+        <comment>Create Users Table</comment>
+        <createTable tableName="users">
+            <column name="id" type="NUMBER(6)" remarks="User ID">
+                <constraints primaryKey="true" primaryKeyName="PK_USR_ID" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="NUMBER(1)"/>
+        </createTable>
+      </changeSet>
+
+    <changeSet id="create-authorities-table" author="britzj">
+        <comment>Create Authorities Table</comment>
+        <createTable tableName="authorities">
+            <column name="username" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="tag-user-1.0" author="britzj">
+        <tagDatabase tag="user-1.0"/>
+    </changeSet>
+
+    <changeSet id="dummy-user-data" author="britzj">
+        <comment>Insert dummy data</comment>
+        <insert tableName="users">
+            <column name="id">1</column>
+            <column name="username">user</column>
+            <column name="password">{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC</column>
+            <column name="enabled">1</column>
+        </insert>
+        <insert tableName="authorities">
+            <column name="username">user</column>
+            <column name="authority">ROLE_USER</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="tag-user-1.1" author="britzj">
+        <tagDatabase tag="user-1.1"/>
+    </changeSet>
+
+    <changeSet id="add-admin-user" author="britzj">
+        <comment>Add Admin User</comment>
+        <insert tableName="users">
+            <column name="id">2</column>
+            <column name="username">admin</column>
+            <column name="password">{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC</column>
+            <column name="enabled">1</column>
+        </insert>
+        <insert tableName="authorities">
+            <column name="username">admin</column>
+            <column name="authority">ROLE_ADMIN</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="tag-user-1.2" author="britzj">
+        <tagDatabase tag="user-1.2"/>
+    </changeSet>
+
+</databaseChangeLog>

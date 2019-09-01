@@ -1,0 +1,103 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet id="oauth2-create-client-details-table" author="britzj">
+        <comment>Create Client Details Table</comment>
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="VARCHAR(256)" remarks="OAuth Client ID">
+                <constraints primaryKey="true" primaryKeyName="PK_OAUTH_CD" nullable="false"/>
+            </column>
+            <column name="resource_ids" type="VARCHAR(256)"/>
+            <column name="client_secret" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="scope" type="VARCHAR(256)"/>
+            <column name="authorized_grant_types" type="VARCHAR(256)"/>
+            <column name="web_server_redirect_uri" type="VARCHAR(256)"/>
+            <column name="authorities" type="VARCHAR(256)"/>
+            <column name="access_token_validity" type="NUMBER(8)"/>
+            <column name="refresh_token_validity" type="NUMBER(8)"/>
+            <column name="additional_information" type="VARCHAR(4000)"/>
+            <column name="autoapprove" type="VARCHAR(256)"/>
+        </createTable>
+      </changeSet>
+
+    <changeSet id="oauth2-create-client-token-table" author="britzj">
+        <comment>Create Client Token Table</comment>
+        <createTable tableName="oauth_client_token">
+            <column name="token_id" type="VARCHAR(256)"/>
+            <column name="token" type="LONGBLOB"/>
+            <column name="authentication_id" type="VARCHAR(256)">
+                <constraints primaryKey="true" primaryKeyName="PK_OAUTH_CT"/>
+            </column>
+            <column name="user_name" type="VARCHAR(256)"/>
+            <column name="client_id" type="VARCHAR(256)"/>
+            <column name="authentication" type="LONGBLOB"/>
+            <column name="refresh_token" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="oauth-create-access-token-table" author="britzj">
+        <comment>Create Access Token Table</comment>
+        <createTable tableName="oauth_access_token">
+            <column name="token_id" type="VARCHAR(256)"/>
+            <column name="token" type="LONGBLOB"/>
+            <column name="authentication_id" type="VARCHAR(256)"/>
+            <column name="user_name" type="VARCHAR(256)"/>
+            <column name="client_id" type="VARCHAR(256)"/>
+            <column name="authentication" type="LONGBLOB"/>
+            <column name="refresh_token" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="oauth2-create-refresh-token-table" author="britzj">
+        <comment>Create Refresh Token Table</comment>
+        <createTable tableName="oauth_refresh_token">
+            <column name="token_id" type="VARCHAR(256)"/>
+            <column name="token" type="LONGBLOB"/>
+            <column name="authentication" type="LONGBLOB"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="oauth2-create-oauth-code-table" author="britzj">
+        <comment>Create OAuth Code Table</comment>
+        <createTable tableName="oauth_code">
+            <column name="code" type="VARCHAR(256)"/>
+            <column name="authentication" type="LONGBLOB"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="oauth2-create-approvals-table" author="britzj">
+        <comment>Create OAuth Approvals Table</comment>
+        <createTable tableName="oauth_approvals">
+            <column name="userId" type="VARCHAR(256)"/>
+            <column name="clientId" type="VARCHAR(256)"/>
+            <column name="scope" type="VARCHAR(256)"/>
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="expiresAt" type="TIMESTAMP"/>
+            <column name="lastModifiedAt" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="tag-oauth-1.0" author="britzj">
+        <tagDatabase tag="oauth-1.0"/>
+    </changeSet>
+
+    <changeSet id="insert-dummy-data" author="britzj">
+        <insert tableName="oauth_client_details">
+            <column name="client_id">clientId</column>
+            <column name="client_secret">{bcrypt}$2a$10$vCXMWCn7fDZWOcLnIEhmK.74dvK1Eh8ae2WrWlhr2ETPLoxQctN4.</column>
+            <column name="scope">read,write</column>
+            <column name="authorized_grant_types">password,refresh_token,client_credentials</column>
+            <column name="authorities">ROLE_CLIENT</column>
+            <column name="access_token_validity">300</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="tag-oauth-1.1" author="britzj">
+        <tagDatabase tag="oauth-1.1"/>
+    </changeSet>
+
+</databaseChangeLog>

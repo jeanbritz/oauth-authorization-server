@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: postgres
+    password: oauth2
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    name: oauth2
+
+server:
+  port: 8091
+  address: 0.0.0.0
+
+logging:
+  level:
+    org.springframework.security: DEBUG
